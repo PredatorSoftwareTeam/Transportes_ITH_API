@@ -5,7 +5,7 @@ export const createSolicitud = async (req, res) => {
   try {
     const { numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente } = req.body;
     const [rows] = await pool.query(
-    "INSERT INTO solicitudes (numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente) VALUES (?, ?, ?, ?, ?, ?)",
+    "INSERT INTO SOLICITUDES (numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente) VALUES (?, ?, ?, ?, ?, ?)",
     [ numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente]
   );
   res.status(201).json({ id: rows.insertId, numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente });
@@ -18,7 +18,7 @@ export const createSolicitud = async (req, res) => {
 export const deleteSolicitud = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("DELETE FROM solicitudes WHERE idSolicitud = ?", [id]);
+    const [rows] = await pool.query("DELETE FROM SOLICITUDES WHERE idSolicitud = ?", [id]);
   
     if (rows.affectedRows <= 0) {
       return res.status(404).json({ message: "Solicitud not found" });
@@ -36,14 +36,14 @@ export const updateSolicitud = async (req, res) => {
     const { numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE solicitudes SET numeroVenta = IFNULL(?, numeroVenta), productos = IFNULL(?, productos), nombreDestinatario = IFNULL(?, nombreDestinatario), direccionDestino = IFNULL(?, direccionDestino), fechaEntrega = IFNULL(?, fechaEntrega), idCliente = IFNULL(?, idCliente) WHERE idSolicitud = ?",
+      "UPDATE SOLICITUDES SET numeroVenta = IFNULL(?, numeroVenta), productos = IFNULL(?, productos), nombreDestinatario = IFNULL(?, nombreDestinatario), direccionDestino = IFNULL(?, direccionDestino), fechaEntrega = IFNULL(?, fechaEntrega), idCliente = IFNULL(?, idCliente) WHERE idSolicitud = ?",
       [numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, id]
     );
 
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "Solicitud not found" });
 
-    const [rows] = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [
+    const [rows] = await pool.query("SELECT * FROM SOLICITUDES WHERE idSolicitud = ?", [
       id,
     ]);
     
@@ -55,7 +55,7 @@ export const updateSolicitud = async (req, res) => {
 
 export const getSolicitudes = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM solicitudes");
+    const [rows] = await pool.query("SELECT * FROM SOLICITUDES");
     res.json(rows);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
@@ -65,7 +65,7 @@ export const getSolicitudes = async (req, res) => {
 export const getSolicitud = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [
+    const [rows] = await pool.query("SELECT * FROM SOLICITUDES WHERE idSolicitud = ?", [
       id,
     ]);
 
