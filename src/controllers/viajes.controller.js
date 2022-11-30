@@ -2,7 +2,7 @@ import { pool } from "../db.js";
 
 
 export const createViaje = async (req, res) => {
-  try {
+  //try {
     const { estadoEntrega, idPersonal, numeroGuia } = req.body;
     const [rows] = await pool.query(
       "INSERT INTO Viajes_programados (estadoEntrega, idPersonal, numeroGuia) VALUES (?, ?, ?)",
@@ -10,9 +10,9 @@ export const createViaje = async (req, res) => {
     );
     res.status(201).json({ id: rows.insertId, estadoEntrega, idPersonal, numeroGuia });
       
-    } catch (error) {
+ //   } catch (error) {
       return res.status(500).json({ message: "Something goes wrong" });
-    }
+ //   }
     
   };
 
@@ -58,12 +58,12 @@ export const updateViaje = async (req, res) => {
 
 
 export const getViajes = async (req, res) => {
-  try {
+ // try {
     const [rows] = await pool.query("SELECT * FROM Viajes_programados");
     res.json(rows);
-  } catch (error) {
+ // } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
-  }
+ // }
 };
 
 export const getViaje = async (req, res) => {
