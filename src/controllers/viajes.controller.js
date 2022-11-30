@@ -5,7 +5,7 @@ export const createViaje = async (req, res) => {
   //try {
     const { estadoEntrega, idPersonal, numeroGuia } = req.body;
     const [rows] = await pool.query(
-      "INSERT INTO Viajes_programados (estadoEntrega, idPersonal, numeroGuia) VALUES (?, ?, ?)",
+      "INSERT INTO VIAJES_PROGRAMADOS (estadoEntrega, idPersonal, numeroGuia) VALUES (?, ?, ?)",
       [estadoEntrega, idPersonal, numeroGuia]
     );
     res.status(201).json({ id: rows.insertId, estadoEntrega, idPersonal, numeroGuia });
@@ -20,7 +20,7 @@ export const createViaje = async (req, res) => {
 export const deleteViaje = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("DELETE FROM Viajes_programados WHERE idViaje = ?", [id]);
+    const [rows] = await pool.query("DELETE FROM VIAJES_PROGRAMADOS WHERE idViaje = ?", [id]);
   
     if (rows.affectedRows <= 0) {
       return res.status(404).json({ message: "Viaje not found" });
@@ -39,14 +39,14 @@ export const updateViaje = async (req, res) => {
     const { estadoEntrega, idPersonal, numeroGuia } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE viajes_programados SET estadoEntrega = IFNULL(?, estadoEntrega), idPersonal = IFNULL(?, idPersonal), numeroGuia = IFNULL(?, idSolicitud) WHERE idViaje = ?",
+      "UPDATE VIAJES_PROGRAMADOS SET estadoEntrega = IFNULL(?, estadoEntrega), idPersonal = IFNULL(?, idPersonal), numeroGuia = IFNULL(?, idSolicitud) WHERE idViaje = ?",
       [estadoEntrega, idPersonal, numeroGuia, id]
     );
 
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "not found solicitud" });
 
-    const [rows] = await pool.query("SELECT * FROM viajes_programados WHERE idSolicitud = ?", [
+    const [rows] = await pool.query("SELECT * FROM VIAJES_PROGRAMADOS WHERE idSolicitud = ?", [
       id,
     ]);
 
@@ -59,7 +59,7 @@ export const updateViaje = async (req, res) => {
 
 export const getViajes = async (req, res) => {
  // try {
-    const [rows] = await pool.query("SELECT * FROM Viajes_programados");
+    const [rows] = await pool.query("SELECT * FROM VIAJES_PROGRAMADOS");
     res.json(rows);
  // } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
@@ -69,7 +69,7 @@ export const getViajes = async (req, res) => {
 export const getViaje = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("SELECT * FROM Viajes_programados WHERE idViaje = ?", [
+    const [rows] = await pool.query("SELECT * FROM VIAJES_PROGRAMADOS WHERE idViaje = ?", [
       id,
     ]);
 
