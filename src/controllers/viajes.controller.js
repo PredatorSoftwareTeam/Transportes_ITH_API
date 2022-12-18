@@ -59,7 +59,7 @@ export const updateViaje = async (req, res) => {
 
 export const getViajes = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT VIAJES_PROGRAMADOS.idViaje, VIAJES_PROGRAMADOS.estadoEntrega, VIAJES_PROGRAMADOS.numeroGuia, PERSONAL.idPersonal, CLIENTES.direccionAlmacen FROM VIAJES_PROGRAMADOS INNER JOIN PERSONAL ON VIAJES_PROGRAMADOS.idPersonal = PERSONAL.idPersonal  INNER JOIN SOLICITUDES ON VIAJES_PROGRAMADOS.numeroGuia = SOLICITUDES.idSolicitud INNER JOIN CLIENTES ON SOLICITUDES.idCliente = CLIENTES.idCliente");
+    const [rows] = await pool.query("SELECT VIAJES_PROGRAMADOS.idViaje, VIAJES_PROGRAMADOS.estadoEntrega, VIAJES_PROGRAMADOS.idPersonal, VIAJES_PROGRAMADOS.numeroGuia, PERSONAL.nombre, SOLICITUDES.direccionDestino , CLIENTES.direccionAlmacen FROM VIAJES_PROGRAMADOS INNER JOIN PERSONAL ON VIAJES_PROGRAMADOS.idPersonal = PERSONAL.idPersonal INNER JOIN SOLICITUDES ON VIAJES_PROGRAMADOS.numeroGuia = SOLICITUDES.idSolicitud INNER JOIN CLIENTES ON SOLICITUDES.idCliente = CLIENTES.idCliente");
     res.json(rows);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
@@ -69,7 +69,7 @@ export const getViajes = async (req, res) => {
 export const getViaje = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query("SELECT VIAJES_PROGRAMADOS.idViaje, VIAJES_PROGRAMADOS.estadoEntrega, VIAJES_PROGRAMADOS.numeroGuia, PERSONAL.idPersonal, CLIENTES.direccionAlmacen FROM VIAJES_PROGRAMADOS INNER JOIN PERSONAL ON VIAJES_PROGRAMADOS.idPersonal = PERSONAL.idPersonal  INNER JOIN SOLICITUDES ON VIAJES_PROGRAMADOS.numeroGuia = SOLICITUDES.idSolicitud INNER JOIN CLIENTES ON SOLICITUDES.idCliente = CLIENTES.idCliente WHERE idViaje = ?", [
+    const [rows] = await pool.query("SELECT * WHERE idViaje = ?", [
       id,
     ]);
 
