@@ -55,7 +55,7 @@ export const updateSolicitud = async (req, res) => {
 
 export const getSolicitudes = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM SOLICITUDES");
+    const [rows] = await pool.query("SELECT * FROM SOLICITUDES WHERE estadoRevisado='1'");
     res.json(rows);
   } catch (error) {
     return res.status(500).json({ message: "Something goes wrong" });
