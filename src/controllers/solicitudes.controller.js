@@ -33,11 +33,11 @@ export const deleteSolicitud = async (req, res) => {
 export const updateSolicitud = async (req, res) => {
   try {
     const { id } = req.params;
-    const { numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente } = req.body;
+    const { numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, estadoRevisado } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE SOLICITUDES SET numeroVenta = IFNULL(?, numeroVenta), productos = IFNULL(?, productos), nombreDestinatario = IFNULL(?, nombreDestinatario), direccionDestino = IFNULL(?, direccionDestino), fechaEntrega = IFNULL(?, fechaEntrega), idCliente = IFNULL(?, idCliente) WHERE idSolicitud = ?",
-      [numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, id]
+      "UPDATE SOLICITUDES SET numeroVenta = IFNULL(?, numeroVenta), productos = IFNULL(?, productos), nombreDestinatario = IFNULL(?, nombreDestinatario), direccionDestino = IFNULL(?, direccionDestino), fechaEntrega = IFNULL(?, fechaEntrega), idCliente = IFNULL(?, idCliente), estadoRevisado = IFNULL(?, estadoRevisado) WHERE idSolicitud = ?",
+      [numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, estadoRevisado, id]
     );
 
     if (result.affectedRows === 0)
