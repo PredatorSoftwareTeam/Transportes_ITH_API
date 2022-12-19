@@ -36,11 +36,11 @@ export const deleteViaje = async (req, res) => {
 export const updateViaje = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estadoEntrega, idPersonal, numeroGuia } = req.body;
+    const { estadoEntrega } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE VIAJES_PROGRAMADOS SET estadoEntrega = IFNULL(?, estadoEntrega), idPersonal = IFNULL(?, idPersonal), numeroGuia = IFNULL(?, idSolicitud) WHERE idViaje = ?",
-      [estadoEntrega, idPersonal, numeroGuia, id]
+      "UPDATE VIAJES_PROGRAMADOS SET estadoEntrega = IFNULL(?, estadoEntrega) WHERE idViaje = ?",
+      [estadoEntrega, id]
     );
 
     if (result.affectedRows === 0)

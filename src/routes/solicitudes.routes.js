@@ -5,6 +5,7 @@ import {
   getSolicitud,
   getSolicitudes,
   updateSolicitud,
+  updateEstadoSolicitud
 } from "../controllers/solicitudes.controller.js";
 
 const router = Router();
@@ -23,5 +24,8 @@ router.post("/solicitudes", createSolicitud);
 
 // UPDATE an Solicitud
 router.patch("/solicitudes/:id", updateSolicitud);
+
+// UPDATE estado de solicitud
+router.patch("/solicitud/:id", updateEstadoSolicitud);
 
 export default router;

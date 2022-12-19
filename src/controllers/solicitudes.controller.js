@@ -53,6 +53,29 @@ export const updateSolicitud = async (req, res) => {
   }
 };
 
+export const updateEstadoSolicitud = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estadoRevisado } = req.body;
+
+    const [result] = await pool.query(
+      "UPDATE SOLICITUDES SET estadoRevisado = IFNULL(?, estadoRevisado) WHERE idSolicitud = ?",
+      [estadoRevisado, id]
+    );
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ message: "Solicitud not found" });
+
+    const [rows] = await pool.query("SELECT * FROM SOLICITUDES WHERE idSolicitud = ?", [
+      id,
+    ]);
+    
+    res.json(rows[0]);
+  } catch (error) {
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
+};
+
 export const getSolicitudes = async (req, res) => {
   try {
     const [rows] = await pool.query("SELECT * FROM SOLICITUDES WHERE estadoRevisado='1'");
