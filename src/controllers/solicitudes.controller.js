@@ -59,7 +59,7 @@ export const updateEstadoSolicitud = async (req, res) => {
     const { estadoRevisado } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE SOLICITUDES SET estadoRevisado = IFNULL(?, estadoRevisado) WHERE idSolicitud = ?",
+      "UPDATE SOLICITUDES SET estadoRevisado = 2 WHERE idSolicitud = ?",
       [estadoRevisado, id]
     );
 
