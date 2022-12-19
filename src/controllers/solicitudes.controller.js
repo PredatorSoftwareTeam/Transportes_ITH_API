@@ -36,8 +36,8 @@ export const updateSolicitud = async (req, res) => {
     const { numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, estadoRevisado } = req.body;
 
     const [result] = await pool.query(
-      "UPDATE SOLICITUDES SET numeroVenta = IFNULL(?, numeroVenta), productos = IFNULL(?, productos), nombreDestinatario = IFNULL(?, nombreDestinatario), direccionDestino = IFNULL(?, direccionDestino), fechaEntrega = IFNULL(?, fechaEntrega), idCliente = IFNULL(?, idCliente), estadoRevisado = IFNULL(?, estadoRevisado) WHERE idSolicitud = ?",
-      [numeroVenta, productos, nombreDestinatario, direccionDestino, fechaEntrega, idCliente, estadoRevisado, id]
+      "UPDATE SOLICITUDES SET  estadoRevisado = 2 WHERE idSolicitud = ?",
+      [id]
     );
 
     if (result.affectedRows === 0)
